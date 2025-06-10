@@ -51,3 +51,25 @@ docker build -t locust-grpc .
 ```bash
 docker run --rm --network host locust-grpc -f /mnt/locust/locustfile-grpc.py --host=http://localhost:8081
 ```
+
+**Number of users (peak concurrency)**
+- Total number of simulated users(Virtual users - VU) that will run the test
+- Each user runs tasks repeatedly (The `@task` functions) in a loop
+- Think of each user as a concurrent client or user session
+- "Number of users = 100" - Locust will simulate 100 users at the same time during peak load
+  **Ramp up (users started/second)**
+- Controls how quickly Locust brings users online
+- Defines the rate at which new users start executing tasks
+- Faster ramp-up(Lower time) means a more aggressive load spike
+- "spawn-rate = 10" means 10 users are started per second and combined with "users = 100" - It will take 10 seconds to reach full load
+- `ramp-up time = total users / spawn rate = 100 / 10 = 10 seconds`
+
+**Host**
+
+**Run time (optional)**
+- How long the test should run after ramp-up is complete
+- If this is not set:
+    - In UI mode - The test runs until "Stop" is clicked
+    - In headless mode - Locust runs indefinitely unless stopped manually
+
+**Profile**
